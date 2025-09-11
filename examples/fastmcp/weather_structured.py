@@ -215,11 +215,24 @@ if __name__ == "__main__":
             print("-" * 80)
 
     # Check command line arguments
-    if len(sys.argv) > 1 and sys.argv[1] == "--schemas":
-        asyncio.run(print_schemas())
+    if len(sys.argv) > 1:
+        if sys.argv[1] == "--schemas":
+            asyncio.run(print_schemas())
+        elif sys.argv[1] == "--server":
+            print("Weather MCP Server starting...")
+            print("Available tools: get_weather, get_weather_summary, get_weather_metrics, get_weather_alerts, get_temperature, get_weather_stats")
+            mcp.run(transport="stdio")
+        else:
+            print("Usage:")
+            print("  python weather_structured.py          # Run tool tests")
+            print("  python weather_structured.py --schemas # Print tool schemas")
+            print("  python weather_structured.py --server  # Run as MCP server")
+            print()
+            asyncio.run(test())
     else:
         print("Usage:")
         print("  python weather_structured.py          # Run tool tests")
         print("  python weather_structured.py --schemas # Print tool schemas")
+        print("  python weather_structured.py --server  # Run as MCP server")
         print()
         asyncio.run(test())

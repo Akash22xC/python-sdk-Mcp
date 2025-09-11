@@ -1,0 +1,93 @@
+{
+  "mcp_servers": {
+    "github_copilot_assistant": {
+      "name": "GitHub Copilot Development Assistant",
+      "description": "Development tools and utilities for GitHub Copilot",
+      "url": "http://localhost:8090",
+      "transport": "http",
+      "capabilities": [
+        "tools",
+        "resources"
+      ],
+      "tools": [
+        {
+          "name": "get_system_info",
+          "description": "Get system information useful for development"
+        },
+        {
+          "name": "run_git_command", 
+          "description": "Run git commands and return results"
+        },
+        {
+          "name": "analyze_project_structure",
+          "description": "Analyze project structure and dependencies"
+        },
+        {
+          "name": "read_file_content",
+          "description": "Read file content with optional line limits"
+        },
+        {
+          "name": "search_in_files",
+          "description": "Search for patterns in project files"
+        },
+        {
+          "name": "get_package_info",
+          "description": "Get package/dependency information"
+        }
+      ]
+    },
+    "weather_service": {
+      "name": "Weather Information Service",
+      "description": "Weather data and forecasts",
+      "url": "http://localhost:8080", 
+      "transport": "http",
+      "start_command": "cd python-sdk-Mcp && uv run python examples/fastmcp/weather_structured.py",
+      "tools": [
+        "get_weather",
+        "get_weather_summary", 
+        "get_weather_alerts",
+        "get_temperature",
+        "get_weather_stats"
+      ]
+    },
+    "web_fetcher": {
+      "name": "Website Content Fetcher",
+      "description": "Fetch and analyze web content",
+      "url": "http://localhost:8080",
+      "transport": "sse",
+      "start_command": "cd python-sdk-Mcp/examples/servers/simple-tool && uv run python -m mcp_simple_tool.server --transport=sse --port=8080",
+      "tools": [
+        "fetch"
+      ]
+    }
+  },
+  "integration_examples": {
+    "copilot_chat_integration": {
+      "description": "How to use MCP servers in GitHub Copilot Chat",
+      "examples": [
+        {
+          "prompt": "@mcp analyze this project structure",
+          "tool_call": "analyze_project_structure",
+          "expected_result": "Project analysis with files, dependencies, and structure"
+        },
+        {
+          "prompt": "@mcp what's the weather in London?",
+          "tool_call": "get_weather",
+          "expected_result": "Current weather data for London"
+        },
+        {
+          "prompt": "@mcp run git status",
+          "tool_call": "run_git_command", 
+          "arguments": {"command": "status"},
+          "expected_result": "Git repository status"
+        },
+        {
+          "prompt": "@mcp search for TODO comments in Python files",
+          "tool_call": "search_in_files",
+          "arguments": {"pattern": "TODO", "file_extension": "py"},
+          "expected_result": "List of TODO comments in Python files"
+        }
+      ]
+    }
+  }
+}
